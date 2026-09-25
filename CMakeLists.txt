@@ -16,9 +16,26 @@ FetchContent_Declare(
 )
 FetchContent_MakeAvailable(glfw)
 
+FetchContent_Declare(
+        glew
+        GIT_REPOSITORY https://github.com/Perlmint/glew-cmake.git
+        GIT_TAG glew-cmake-2.2.0
+)
+
+set(CMAKE_POLICY_VERSION_MINIMUM 3.5)
+FetchContent_MakeAvailable(glew)
+unset(CMAKE_POLICY_VERSION_MINIMUM)
+
+FetchContent_MakeAvailable(glew)
+
 find_package(OpenGL REQUIRED)
 
 add_executable(MojProjekat main.cpp
         buffer.cpp
-        buffer.h)
-target_link_libraries(MojProjekat PRIVATE glfw OpenGL::GL)
+        buffer.h
+        h/shaders.h
+        src/shaders.cpp
+        h/render.h
+        src/render.cpp)
+
+target_link_libraries(MojProjekat PRIVATE glfw libglew_static OpenGL::GL)
