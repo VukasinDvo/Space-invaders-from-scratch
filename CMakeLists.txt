@@ -31,11 +31,15 @@ FetchContent_MakeAvailable(glew)
 find_package(OpenGL REQUIRED)
 
 add_executable(MojProjekat main.cpp
-        buffer.cpp
-        buffer.h
+        src/buffer.cpp
+        h/buffer.h
         h/shaders.h
         src/shaders.cpp
         h/render.h
-        src/render.cpp)
+        src/render.cpp
+        h/sprite.h
+        src/sprite.cpp
+        h/Game.h
+        src/Game.cpp)
 
 target_link_libraries(MojProjekat PRIVATE glfw libglew_static OpenGL::GL)
