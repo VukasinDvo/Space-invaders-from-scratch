@@ -40,6 +40,8 @@ add_executable(MojProjekat main.cpp
         h/sprite.h
         src/sprite.cpp
         h/Game.h
-        src/Game.cpp)
+        src/Game.cpp
+        h/SpriteAnimation.h
+        src/SpriteAnimation.cpp)
 
 target_link_libraries(MojProjekat PRIVATE glfw libglew_static OpenGL::GL)

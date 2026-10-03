@@ -25,4 +25,5 @@ struct Game {
 };
 
 Game gameInit(Buffer &buffer, Sprite alien_sprite, Sprite player_sprite);
+void updatePlayerMovement(Game &game);
 #endif //UNTITLED4_GAME_H

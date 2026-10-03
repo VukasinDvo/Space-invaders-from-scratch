@@ -39,6 +39,23 @@ Sprite get_alien_sprite() {
     return alien_sprite;
 
 }
+Sprite get_alien_sprite2() {
+    Sprite alien_sprite2;
+    alien_sprite2.width = 11;
+    alien_sprite2.height = 8;
+    alien_sprite2.data = new uint8_t[88]
+    {
+        0,0,1,0,0,0,0,0,1,0,0, // ..@.....@..
+        1,0,0,1,0,0,0,1,0,0,1, // @..@...@..@
+        1,0,1,1,1,1,1,1,1,0,1, // @.@@@@@@@.@
+        1,1,1,0,1,1,1,0,1,1,1, // @@@.@@@.@@@
+        1,1,1,1,1,1,1,1,1,1,1, // @@@@@@@@@@@
+        0,1,1,1,1,1,1,1,1,1,0, // .@@@@@@@@@.
+        0,0,1,0,0,0,0,0,1,0,0, // ..@.....@..
+        0,1,0,0,0,0,0,0,0,1,0  // .@.......@.
+    };
+    return alien_sprite2;
+}
 
 Sprite get_ship_sprite() {
     Sprite player_sprite;

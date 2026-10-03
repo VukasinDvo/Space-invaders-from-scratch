@@ -37,3 +37,4 @@ Game gameInit(Buffer &buffer,Sprite alien_sprite,Sprite player_sprite) {
     return game;
 
 }
+

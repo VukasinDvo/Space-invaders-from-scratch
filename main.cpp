@@ -7,6 +7,7 @@
 #include "h/render.h"
 #include "h/shaders.h"
 #include "h/sprite.h"
+#include "h/SpriteAnimation.h"
 
 void error_callback(int error, const char *description) {
     fprintf(stderr, "Error: %s\n", description);
@@ -37,6 +38,8 @@ int main() {
         glfwTerminate();
         return -1;
     }
+    glfwSwapInterval(1);
+
     int fb_width, fb_height;
     glfwGetFramebufferSize(window, &fb_width, &fb_height);
     glViewport(0, 0, fb_width, fb_height);
@@ -45,6 +48,12 @@ int main() {
 
     Sprite alien_sprite = get_alien_sprite();
     Sprite player_sprite = get_ship_sprite();
+
+    SpriteAnimation* alien_animation = create_sprite_animation(
+    { get_alien_sprite(), get_alien_sprite2() },
+    true,
+    10
+);
 
     Game game = gameInit(buf,alien_sprite,player_sprite);
 
@@ -78,12 +87,18 @@ int main() {
     glBindVertexArray(fullscreen_triangle_vao);
     uint32_t clear_color = rgb_to_uint32(0, 128, 0);
 
+    int player_move_dir=1;
+
     while (!glfwWindowShouldClose(window)) {
         buffer_clear(&buf, 0);
 
+        // Izračunaj trenutni frame animacije
+        size_t current_frame = alien_animation->time / alien_animation->frame_durration;
+        Sprite* current_alien_sprite = alien_animation->frames[current_frame];
+
         for (size_t i = 0; i < game.num_aliens; i++) {
             const Alien &alien = game.aliens[i];
-            buffered_sprite_draw(&buf, alien_sprite, alien.x, alien.y,
+            buffered_sprite_draw(&buf, *current_alien_sprite, alien.x, alien.y,
                 rgb_to_uint32(128, 0, 0));
         }
 
@@ -98,6 +113,28 @@ int main() {
 
         glfwSwapBuffers(window);
         glfwPollEvents();
+
+        ++alien_animation->time;
+        if (alien_animation->time == alien_animation->num_frames * alien_animation->frame_durration) {
+            if (alien_animation->loop) {
+                alien_animation->time = 0;
+            } else {
+                delete alien_animation;
+                alien_animation = nullptr;
+            }
+        }
+
+        if(game.player.x + player_sprite.width + player_move_dir >= game.width - 1)
+        {
+            game.player.x = game.width - player_sprite.width - player_move_dir - 1;
+            player_move_dir *= -1;
+        }
+        else if((int)game.player.x + player_move_dir <= 0)
+        {
+            game.player.x = 0;
+            player_move_dir *= -1;
+        }
+        else game.player.x += player_move_dir;
     }
 
     delete[] buf.data;

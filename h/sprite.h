@@ -15,5 +15,8 @@ struct Sprite {
 void buffered_sprite_draw(Buffer* buffer,const Sprite &sprite,size_t x,size_t y,uint32_t color);
 
 Sprite get_alien_sprite();
+
+Sprite get_alien_sprite2();
+
 Sprite get_ship_sprite();
 #endif //UNTITLED4_SPRITE_H
